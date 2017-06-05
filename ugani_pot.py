@@ -3,17 +3,20 @@ import random
 GOR = 'gor'
 DESNO = 'desno'
 
+START = 'S'
+CILJ = 'C'
+
 class Polje:
 
-    def __init__(self, visina=10, sirina=10, pot=None):
+    def __init__(self, visina=10, sirina=10):
         self.visina = visina
         self.sirina = sirina
-        if pot is None:
-            self.pot = []
-        else:
-            self.pot = pot
-            
-        self.izbrana_pot = []
+
+        self.polja = []
+        #self.naredi_pot
+
+          
+        
 
     
 
@@ -22,18 +25,25 @@ class Polje:
             self.visina, self.sirina, self.pot)
 
     def __str__(self):
-        polja = []
+        
         for _ in range(self.visina):
-            polja.append(self.sirina * [' '])
+            self.polja.append(self.sirina * [' '])
 
-        polja[self.visina - 1][0] = str('S')
-        polja[0][self.sirina - 1] = str('C')
+        START = self.polja[self.visina - 1][0] = 'S'
+        CILJ = self.polja[0][self.sirina - 1]  = 'C'
 
-        self.izbrana_pot = str('*')
+        
+        smer = random.choice([GOR, DESNO])
+        if smer == GOR:
+            a = self.polja[self.visina-2][0] = '*'
+        else:
+            a = self.polja[self.visina-1][1] = '*'
+        
+            
             
         niz = ''
         rob = '+' + self.sirina * '-' + '+\n'
-        for vrstica in polja:
+        for vrstica in self.polja:
             niz += '|'+ ''.join(vrstica) + '|\n'
         return rob + niz + rob
 
@@ -41,16 +51,14 @@ class Polje:
 
         
 
-    def naredi_pot(self, pot, polja):
-        smer = random.choice('gor', 'desno')
-        if smer == 'gor':
-            self.izbrana_pot=polja[self.visina-2][0]
-        else:
-            self.izbrana_pot=polja[self.visina-1][1]
+    #def naredi_pot(self, pot, polja):
+        
+        
+
         
 
 class Pot:
-
+    
     def __init__(self, polj):
         self.polj = polj
         #kordinate

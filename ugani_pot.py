@@ -1,70 +1,51 @@
-import random
+import tkinter as tk
+import model
 
-GOR = 'gor'
-DESNO = 'desno'
+class Pot:
+    def __init__(self, okno):
+        self.polje = model.Polje(10, 10)
 
-START = 'S'
-CILJ = 'C'
-
-class Polje:
-
-    def __init__(self, visina=10, sirina=10):
-        self.visina = visina
-        self.sirina = sirina
-        self.polja = [] 
-    
+        self.okvir = tk.Frame(okno, height=200, width=200)
+        self.okvir.place(x=0,y=0)
         
-    def nova_igra(self):
-        # Ob začetku igre ustvari pot (rešitev)
-        seznam = 9*[DESNO] + 9*[GOR]
-        random.shuffle(seznam)
-        self.resitev = [(self.visina -1, 0)]
-        i, j = (self.visina - 1, 0)
-        for smer in seznam:
-            if smer == GOR:
-                i -= 1
-            else:
-                j += 1
-            self.resitev.append((i,j))
+        self.prikaz_polja = tk.Canvas(self.okvir, height=200 , width=200)
+        self.prikaz_polja.place(x=0,y=0)
 
-        self.korak = 0
+        
+        okno.bind('<Key>', self.tipka)
+        
 
-    def ugibaj(self, smer):
-        if self.korak == 18:
-            return None
-        #Preveri če si zadel pot ali ne
-        i, j = self.resitev[self.korak]
-        if smer == GOR and self.resitev[self.korak + 1] == (i - 1, j):
-            self.korak += 1
-        elif smer == DESNO and self.resitev[self.korak + 1] == (i, j + 1):
-            self.korak +=1
-        else:
-            #zgrešiš
-            self.korak = 0
+    def narisi(self):
+        
+        for i in range(self.polje.visina):
+            for j in range(self.polje.sirina):
+                self.prikaz_polja.create_polygon(20*j+2,20*i+2,20*j+20-2,20*i+2,20*j+20-2,20*i+20-2,20*j+2,20*i+20-2, fill='white')  
+
+
+        
+        i = 0
+        j = 9
+        self.prikaz_polja.create_polygon(20*j+2,20*i+2,20*j+20-2,20*i+2,20*j+20-2,20*i+20-2,20*j+2,20*i+20-2,fill = 'red')
+        self.prikaz_polja.create_text(20*j+10,20*i+10, text='C')
+
+        
+        for k in range(self.polje.korak):
+            i, j = self.polje.resitev[k]
+            self.prikaz_polja.create_polygon(20*j+2,20*i+2,20*j+20-2,20*i+2,20*j+20-2,20*i+20-2,20*j+2,20*i+20-2,fill = 'red')
             
-        
+        self.prikaz_polja.create_text(10,20*9+10, text='S')
 
-    
-
-    def __repr__(self):
-        return 'Polje(visina={}, sirina={}, pot={})'.format(
-            self.visina, self.sirina, self.pot)
-
-    def __str__(self):
-        
-        for _ in range(self.visina):
-            self.polja.append(self.sirina * [' '])
-
-        START = self.polja[self.visina - 1][0] = 'S'
-        CILJ = self.polja[0][self.sirina - 1] = 'C'
-
-            
-        niz = ''
-        rob = '+' + self.sirina * '-' + '+\n'
-        for vrstica in self.polja:
-            niz += '|'+ ''.join(vrstica) + '|\n'
-        return rob + niz + rob
+    def tipka(self, event):
+        if event.keysym == 'Right':
+            self.polje.ugibaj(model.DESNO)
+            self.narisi()
+        elif event.keysym == 'Up':
+            self.polje.ugibaj(model.GOR)
+            self.narisi() 
 
 
-
-print(Polje())
+okno = tk.Tk()
+a = Pot(okno)
+a.polje.nova_igra()
+a.narisi()
+okno.mainloop()

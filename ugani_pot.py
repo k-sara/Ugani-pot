@@ -102,8 +102,7 @@ class Pot:
 
     def shrani_rezultat(self):
         with open('rezultati.txt', 'a') as datoteka:
-            print(self.ime_igralca.get(), str(self.polje.stevec),
-                  file=datoteka)
+            print(self.ime_igralca.get(), str(self.polje.stevec), file=datoteka)
 
 
 

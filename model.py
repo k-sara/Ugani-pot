@@ -3,9 +3,6 @@ import random
 GOR = 'gor'
 DESNO = 'desno'
 
-START = 'S'
-CILJ = 'C'
-
 class Polje:
 
     def __init__(self, visina=10, sirina=10):

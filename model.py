@@ -29,13 +29,13 @@ class Polje:
 
 
     def ugibaj(self, smer):
-        #Preveri če si zadel pot ali ne, tako da primerja
-        #pritisnjeno tipko s seznamom rešitve
+        # Preveri če si zadel pot ali ne, tako da primerja
+        # pritisnjeno tipko s seznamom rešitve
         
         if smer == self.seznam[self.korak]:
             self.korak += 1
         else:
-            #zgrešiš
+            # če zgrešiš
             self.korak = 0
             self.stevec += 1
             

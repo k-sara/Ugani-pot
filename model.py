@@ -35,7 +35,7 @@ class Polje:
         if smer == self.seznam[self.korak]:
             self.korak += 1
         else:
-            # če zgrešiš
+            # zgrešena poteza
             self.korak = 0
             self.stevec += 1
             

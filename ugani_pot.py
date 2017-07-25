@@ -1,15 +1,22 @@
 import tkinter as tk
 import model
 
+RAZMERJE = 20
+ZAMIK = 2
+
 class Pot:
     def __init__(self, okno):
         self.polje = model.Polje(10, 10)
         
         self.okno = okno
-        self.okvir = tk.Frame(okno, height=400, width=400)
+        self.okvir = tk.Frame(okno,
+                              height=2*RAZMERJE*self.polje.visina,
+                              width=2*RAZMERJE*self.polje.sirina)
         self.okvir.grid(row=0, column=0)
         
-        self.prikaz_polja = tk.Canvas(self.okvir, height=200, width=200)
+        self.prikaz_polja = tk.Canvas(self.okvir,
+                                      height=RAZMERJE*self.polje.visina,
+                                      width=RAZMERJE*self.polje.sirina)
         self.prikaz_polja.grid(row=0, column=0)
 
         self.okno.bind('<Key>', self.tipka)
@@ -49,39 +56,59 @@ class Pot:
         #Nariše kvadratke
         for i in range(self.polje.visina):
             for j in range(self.polje.sirina):
-                self.prikaz_polja.create_polygon(20*j+2,20*i+2,
-                                                 20*j+20-2,20*i+2,
-                                                 20*j+20-2,20*i+20-2,
-                                                 20*j+2,20*i+20-2,
+                self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
+                                                 RAZMERJE*i + ZAMIK,
+                                                 RAZMERJE*j + RAZMERJE - ZAMIK,
+                                                 RAZMERJE*i + ZAMIK,
+                                                 RAZMERJE*j + RAZMERJE - ZAMIK,
+                                                 RAZMERJE*i + RAZMERJE - ZAMIK,
+                                                 RAZMERJE*j + ZAMIK,
+                                                 RAZMERJE*i + RAZMERJE - ZAMIK,
                                                  fill='white')  
 
         #Cilj
         i = 0
         j = 9
-        self.prikaz_polja.create_polygon(20*j+2,20*i+2,
-                                         20*j+20-2,20*i+2,
-                                         20*j+20-2,20*i+20-2,
-                                         20*j+2,20*i+20-2,
+        self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
+                                         RAZMERJE*i + ZAMIK,
+                                         RAZMERJE*j + RAZMERJE - ZAMIK,
+                                         RAZMERJE*i + ZAMIK,
+                                         RAZMERJE*j + RAZMERJE - ZAMIK,
+                                         RAZMERJE*i + RAZMERJE - ZAMIK,
+                                         RAZMERJE*j + ZAMIK,
+                                         RAZMERJE*i + RAZMERJE - ZAMIK,
                                          fill = 'red')
-        self.prikaz_polja.create_text(20*j+10,20*i+10, text='C')
+        self.prikaz_polja.create_text(RAZMERJE*j+(RAZMERJE/2),
+                                      RAZMERJE/2,
+                                      text='C')
 
         #Start
         i = 9
         j = 0
-        self.prikaz_polja.create_polygon(20*j+2,20*i+2,
-                                         20*j+20-2,20*i+2,
-                                         20*j+20-2,20*i+20-2,
-                                         20*j+2,20*i+20-2,
+        self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
+                                         RAZMERJE*i + ZAMIK,
+                                         RAZMERJE*j + RAZMERJE - ZAMIK,
+                                         RAZMERJE*i + ZAMIK,
+                                         RAZMERJE*j + RAZMERJE - ZAMIK,
+                                         RAZMERJE*i + RAZMERJE - ZAMIK,
+                                         RAZMERJE*j + ZAMIK,
+                                         RAZMERJE*i + RAZMERJE - ZAMIK,
                                          fill = 'red')        
-        self.prikaz_polja.create_text(10,20*9+10, text='S')
+        self.prikaz_polja.create_text(RAZMERJE/2,
+                                      RAZMERJE*i+(RAZMERJE/2),
+                                      text='S')
 
         for k in range(self.polje.korak):
             #Rdeče obarva že zadete kvadratke
             i, j = self.polje.resitev[k]
-            self.prikaz_polja.create_polygon(20*j+2, 20*i+2,
-                                             20*j+20-2, 20*i+2,
-                                             20*j+20-2, 20*i+20-2,
-                                             20*j+2, 20*i+20-2,
+            self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
+                                             RAZMERJE*i + ZAMIK,
+                                             RAZMERJE*j + RAZMERJE - ZAMIK,
+                                             RAZMERJE*i + ZAMIK,
+                                             RAZMERJE*j + RAZMERJE - ZAMIK,
+                                             RAZMERJE*i + RAZMERJE - ZAMIK,
+                                             RAZMERJE*j + ZAMIK,
+                                             RAZMERJE*i + RAZMERJE - ZAMIK,
                                              fill = 'red')
             
         if self.polje.korak == 18:

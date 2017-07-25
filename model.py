@@ -16,7 +16,7 @@ class Polje:
         
     def nova_igra(self):
         # Ob začetku igre ustvari pot (rešitev)
-        self.seznam = 9*[DESNO] + 9*[GOR]
+        self.seznam = (self.visina - 1)*[DESNO] + (self.sirina - 1)*[GOR]
         random.shuffle(self.seznam)
         self.resitev = []
         i, j = (self.visina - 1, 0)

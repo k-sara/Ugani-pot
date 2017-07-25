@@ -27,7 +27,9 @@ class Pot:
             self.polje.nova_igra()
             self.narisi()
             
-        gumb = tk.Button(self.okvir, text='NOVA IGRA', height=2, width=10,
+        gumb = tk.Button(self.okvir, text='NOVA IGRA',
+                         height=RAZMERJE//10,
+                         width=RAZMERJE//2,
                          command=gumb_nova_igra)
         gumb.grid(row=0, column=1)
 
@@ -68,7 +70,7 @@ class Pot:
 
         #Cilj
         i = 0
-        j = 9
+        j = self.polje.sirina - 1
         self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
                                          RAZMERJE*i + ZAMIK,
                                          RAZMERJE*j + RAZMERJE - ZAMIK,
@@ -83,7 +85,7 @@ class Pot:
                                       text='C')
 
         #Start
-        i = 9
+        i = self.polje.visina - 1
         j = 0
         self.prikaz_polja.create_polygon(RAZMERJE*j + ZAMIK,
                                          RAZMERJE*i + ZAMIK,
